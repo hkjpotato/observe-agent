@@ -12,8 +12,6 @@ const EXAMPLES = [
 const COLOR = { response_item: "purple", event_msg: "teal" };
 
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-const str = (v) => (v == null ? "" : typeof v === "string" ? v : JSON.stringify(v));
-const texts = (content) => (Array.isArray(content) ? content.map((c) => c.text ?? "").join(" ") : str(content));
 
 // payload.type, plus role / name / item.type when the record has them.
 function sub(r) {
@@ -21,19 +19,10 @@ function sub(r) {
   return [p.type, p.role, p.name, p.type === "item_completed" ? p.item?.type : null].filter(Boolean).join(" · ");
 }
 
-// A short look at the content, taken straight from the record.
+// Last 4 characters of call_id, to pair a tool call with its output.
 function preview(r) {
-  const p = r.payload ?? {};
-  if (r.type === "session_meta") return `${p.originator} · ${p.cli_version} · source ${str(p.source)}`;
-  if (r.type === "turn_context") return `model ${p.model ?? ""}`;
-  if (p.type === "message") return texts(p.content);
-  if (p.type === "custom_tool_call") return str(p.input);
-  if (p.type === "function_call") return str(p.arguments);
-  if (p.type?.endsWith("_output")) return Array.isArray(p.output) ? texts(p.output) : str(p.output);
-  if (p.type === "item_completed" && p.item?.type === "McpToolCall") return `${p.item.server}.${p.item.tool} ${str(p.item.arguments)} → ${p.item.status}`;
-  if (p.type === "item_completed") return texts(p.item?.content) || str(p.item?.text);
-  if (p.type === "token_count") return str(p.info?.last_token_usage);
-  return "";
+  const id = r.payload?.call_id;
+  return id ? `call_id …${id.slice(-4)}` : "";
 }
 
 async function render(ex) {
