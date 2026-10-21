@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>observe-agent</title>
+<style>
+:root { --bg:#fff; --fg:#1f1f1d; --mut:#6b6a66; --line:#e3e1da;
+  --purple:#eeedfe; --purple-ink:#3c3489; --teal:#e1f5ee; --teal-ink:#085041; --gray:#f1efe8; --gray-ink:#5f5e5a; --amber:#faeeda; --amber-ink:#633806; }
+@media (prefers-color-scheme: dark) { :root { --bg:#1b1b19; --fg:#ecebe6; --mut:#9c9a92; --line:#3a3a37;
+  --purple:#2f2b55; --purple-ink:#cecbf6; --teal:#123a30; --teal-ink:#9fe1cb; --gray:#2a2a28; --gray-ink:#b4b2a9; --amber:#4a3612; --amber-ink:#fac775; } }
+body { margin:0 auto; max-width:1100px; padding:20px 16px 64px; font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--fg); }
+h1 { font-size:20px; font-weight:600; margin:0 0 10px; }
+a { color:inherit; }
+#nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+#nav button { font:inherit; padding:5px 12px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--fg); cursor:pointer; }
+#nav button.on { border-color:var(--fg); }
+.bar { display:flex; flex-wrap:wrap; align-items:center; gap:6px; color:var(--mut); margin-bottom:8px; font-size:13px; }
+.chip { border:0; cursor:pointer; padding:1px 8px; border-radius:999px; font:12px ui-monospace,SFMono-Regular,monospace; }
+.chip.off { opacity:.35; text-decoration:line-through; }
+.c-purple.chip, .c-purple > summary { background:var(--purple); color:var(--purple-ink); }
+.c-teal.chip, .c-teal > summary { background:var(--teal); color:var(--teal-ink); }
+.c-gray.chip, .c-gray > summary { background:var(--gray); color:var(--gray-ink); }
+.row.mcp > summary { background:var(--amber); color:var(--amber-ink); margin-left:28px; }
+.turn > summary { font-weight:600; margin:12px 0 4px; cursor:pointer; }
+.row > summary { display:grid; grid-template-columns:32px minmax(160px,300px) 1fr; gap:8px; padding:3px 8px; margin:2px 0; border-radius:6px; cursor:pointer; list-style:none; white-space:nowrap; font-size:13px; }
+.row > summary > span { overflow:hidden; text-overflow:ellipsis; }
+.ln, .ty { font:12px ui-monospace,SFMono-Regular,monospace; }
+.ln { color:var(--mut); }
+pre { font:12px/1.5 ui-monospace,SFMono-Regular,monospace; background:var(--gray); color:var(--fg); padding:10px; border-radius:6px; overflow:auto; max-height:420px; white-space:pre-wrap; word-break:break-word; }
+@media (max-width:700px) { .row > summary { grid-template-columns:28px 1fr; } .pv { display:none; } }
+</style>
+</head>
+<body>
+<h1>observe-agent</h1>
+<div id="nav"></div>
+<div id="view"></div>
+<script src="viewer.js"></script>
+</body>
+</html>
